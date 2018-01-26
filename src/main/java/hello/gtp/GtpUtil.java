@@ -20,19 +20,19 @@ public class GtpUtil {
     private Path buildPath(String article) {
         StringBuilder sb = new StringBuilder(article);
         article = DatabaseFacade.get().get(article);
-        int hopCount = 0;
+        Path path = new Path();
         while (article != null) {
+            path.getWikiPages().add(article);
             sb.append(" ->\n");
             sb.append(article);
-            hopCount++;
             article = DatabaseFacade.get().get(article);
         }
-        return new Path(hopCount, sb.toString());
+        return path;
     }
 
     public Path findPhilosophy(String article) {
 
-        Path resultPath = new Path(0, "todo insert error or info here");
+        Path resultPath = new Path();
         try {
             Map<String, String> pathMap = new HashMap<>();
             if (findPhilosophyRecursive(article, pathMap)) {

@@ -1,20 +1,17 @@
 package hello;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Path {
 
-    private final long hopCount;
-    private final String path;
-
-    public Path(long hopCount, String path) {
-        this.hopCount = hopCount;
-        this.path = path;
-    }
+    public List<String> wikiPages = new LinkedList<>();
 
     public long getHopCount() {
-        return hopCount;
+        return wikiPages.size();
     }
 
-    public String getPath() {
-        return path;
+    public List<String> getWikiPages() {
+        return wikiPages;
     }
 }

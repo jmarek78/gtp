@@ -1,0 +1,96 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        Getting to Philosophy
+    </title>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script type="text/javascript">
+            var app = angular.module("UserManagement", []);
+
+            app.controller("UserManagementController", function($scope, $http) {
+
+                //Initialize page with default data
+                $scope.hopCount = 0;
+                $scope.wikiPages = [];
+                $scope.form = {
+                    wikiPage : ""
+                };
+
+                $scope.submitWikiPage = function() {
+
+                    var method = "";
+                    var url = "";
+                    method = "POST";
+                    url = 'gtp/find';
+
+                    $http({
+                        method : method,
+                        url : url,
+                        data : angular.toJson($scope.form),
+                        headers : {
+                            'Content-Type' : 'application/json'
+                        }
+                    }).then( _success, _error );
+                };
+
+                function _success(response) {
+                    $scope.wikiPages = response.data.wikiPages;
+                    $scope.hopCount = response.data.hopCount;
+                }
+
+                function _error(response) {
+                    console.log(response.statusText);
+                }
+
+            });
+        </script>
+    <style>
+            .button {
+                cursor: pointer;
+                color: blue;
+            }
+            td,th{
+                border: 1px solid gray;
+                width: 25%;
+                text-align: left;
+            }
+            table {
+                width: 600px;
+            }
+    </style>
+</head>
+
+<body ng-app="UserManagement" ng-controller="UserManagementController">
+
+<table>
+    <tr>
+        <th>{{hopCount}} Pages</th>
+    </tr>
+
+    <tr ng-repeat="wikiPage in wikiPages">
+        <td>{{ wikiPage }}</td>
+    </tr>
+
+</table>
+
+<h2>Get to Philosophy from...</h2>
+
+<form ng-submit="submitWikiPage()">
+    <table>
+        <tr>
+            <td>First Name</td>
+            <td><input type="text" ng-model="form.wikiPage" size="60" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Submit" /></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+
+</html>

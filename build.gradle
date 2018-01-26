@@ -26,6 +26,7 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile group: 'org.jsoup', name: 'jsoup', version: '1.11.2'
     compile group: 'org.mapdb', name: 'mapdb', version: '3.0.5'
     testCompile('org.springframework.boot:spring-boot-starter-test')
